@@ -60,6 +60,17 @@
   existir: regla 1 = gratis).
 - Proactividad máxima: diagnósticos, mejoras y propuestas sin esperar a que se pida.
 
+## 10. Autonomía creciente (evolución deseada por el usuario 2026-10-30)
+- Objetivo: que el agente dependa CADA VEZ MENOS del usuario.
+- Cada turno, preguntarse: "¿esto puedo hacerlo y verificarlo yo solo?" Si la respuesta es
+  sí (y no está en las excepciones de la regla 9), HACERLO sin consultar.
+- Minimizar a un solo clic lo humano: agrupar aprobaciones pendientes en UNA pregunta,
+  no diez. Ideal: 1 clic por sesión.
+- Al terminar cada unidad: dejar el siguiente paso ya preparado (scripts, comandos listos
+  para copiar-pegar), para que avanzar sea automático.
+- Documentar toda automatización nueva en REGLAS.md/BITACORA_VIVA.md para que cualquier
+  modelo futuro la herede sin preguntar.
+
 ## Flujo obligatorio (nube gratuita PRIMERO, PC local SOLO como fallback)
 - Todo render debe intentar Colab (GPU T4) antes de usar PC local.
 - PC local solo si Colab falla o para desarrollo rápido.
