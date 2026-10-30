@@ -1,0 +1,44 @@
+# Render en la nube gratis (2000 min/mes) — tu PC no corre NADA, solo recibe el archivo.
+# Flujo: git push → esta action renderiza → descargas film.mp4 desde la pestaña "Actions" → Artifacts.
+name: render-film
+
+on:
+  workflow_dispatch:   # disparo manual desde la pestaña Actions
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci --no-audit --no-fund
+
+      - name: Render (1350 frames @30fps = 45 s)
+        # --gl=swangle: render por software en Linux (los runners no tienen GPU para WebGL)
+        run: npx remotion render src/index.ts Main out/film.mp4 --gl=swangle --concurrency=2
+
+      - name: Verificar entregable
+        run: "ls -lh out/film.mp4 && echo 'Duracion total: 1350 frames @30fps = 45 s'"
+
+      - name: Subir artifact (descarga con 1 clic)
+        uses: actions/upload-artifact@v4
+        with:
+          name: film-mp4
+          path: out/film.mp4
+          retention-days: 30
